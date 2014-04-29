@@ -12,3 +12,6 @@ class FfffoundItem(Item):
     date = Field()
     original_img_url = Field()
     ffffound_img_url = Field()
+
+    # stores data about downloaded images
+    images = Field()

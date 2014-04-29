@@ -28,7 +28,7 @@ class FfffexportSpider(Spider):
             item = FfffoundItem()
             description = asset.css('.description::text').extract()
             item['date'] = description[1]
-            item['original_img_url'] = description[0]
+            item['original_img_url'] = [urlparse.urlparse(description[0], scheme='http').geturl().replace('http:///', 'http://')]
             item['title'] = asset.css('.title a::text').extract()[0]
             item['ffffound_img_url'] = asset.css('table a img[id*=asset]::attr(src)').extract()[0]
             yield item

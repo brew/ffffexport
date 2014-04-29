@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A page!</title>
+    <style type="text/css" media="screen">
+        img {
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    {% for page in pagination -%}
+        {% if page[0] == current_page %}{{page[0]}}{% else %}<a href="{{page[1]}}">{{page[0]}}</a>{% endif %}{% if page[0] != total_pages %} | {% endif %}
+    {% endfor %}
+
+    {% for item in items %}
+        <h2>{{item.title}} | {{item.path}}</2>
+        <p><img src="{{ item.path }}" alt="{{ item.title }}"></p>
+    {% endfor %}
+</body>
+</html>
