@@ -50,7 +50,7 @@
         <article>
             <h2>{{item.title}}</h2>
             <h3>{{item.original_url}}</h3>
-            <p><img src="{{ item.path }}" alt="{{ item.title }}"></p>
+            <p><a href="{{ item.path }}"><img src="{{ item.path }}" alt="{{ item.title }}"></a></p>
         </article>
     {% endfor %}
 </body>
