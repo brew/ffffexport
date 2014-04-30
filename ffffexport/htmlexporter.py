@@ -55,6 +55,7 @@ class HTMLExporter(object):
                         'current_page': page_num + 1,
                         'total_pages': number_of_pages,
                         'pagination': pagination,
+                        'username': spider.username,
                     }
                     html_file.write(template.render(context).encode("UTF-8"))
 

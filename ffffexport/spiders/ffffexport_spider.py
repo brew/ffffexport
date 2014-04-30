@@ -14,6 +14,7 @@ class FfffexportSpider(Spider):
     def __init__(self, username, *args, **kwargs):
         super(FfffexportSpider, self).__init__(*args, **kwargs)
         self.start_urls = ["http://ffffound.com/home/%s/found/" % username]
+        self.username = username
 
     def parse(self, response):
         """
