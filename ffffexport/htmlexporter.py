@@ -59,7 +59,7 @@ class HTMLExporter(object):
                     html_file.write(template.render(context).encode("UTF-8"))
 
     def item_scraped(self, item, response, spider):
-        self.items.append({'title': item['title'], 'path': 'images/%s' % item['images'][0]['path']})
+        self.items.append({'title': item['title'], 'path': 'images/%s' % item['images'][0]['path'], 'original_url': item['original_img_url'][0]})
         return item
 
     def _make_page_url(self, page_num):
