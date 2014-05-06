@@ -1,4 +1,7 @@
+from cStringIO import StringIO
 import urlparse
+
+from PIL import Image
 
 from scrapy import log
 from scrapy.http import Request
@@ -49,9 +52,23 @@ class FfffoundImagesFallBackMiddleware(object):
             return Request(request.meta.get('fallback_url'))
 
     def process_response(self, request, response, spider):
-        if response.status in self.fallback_http_codes and request.meta.get('fallback_url') is not None:
-            reason = response_status_message(response.status)
-            log.msg(format="Trying fallback for %(request)s (fallbackurl is %(fallback_url)s): %(reason)s",
-                    level=log.DEBUG, spider=spider, request=request, fallback_url=request.meta.get('fallback_url'), reason=reason)
-            return Request(request.meta.get('fallback_url'))
+        # If the request meta dict has a fallback_url property... (only the
+        # first original_img_url request has the fallback_url property)
+        if request.meta.get('fallback_url') is not None:
+            # If the response returned a status code that requires us to use
+            # the fallback_url...
+            if response.status in self.fallback_http_codes:
+                reason = response_status_message(response.status)
+                log.msg(format="Trying fallback for %(request)s (fallbackurl is %(fallback_url)s): %(reason)s",
+                        level=log.DEBUG, spider=spider, request=request, fallback_url=request.meta.get('fallback_url'), reason=reason)
+                return Request(request.meta.get('fallback_url'))
+            else:
+                # Try to open the image data to check it's valid.
+                try:
+                    im = Image.open(StringIO(response.body))
+                except IOError as e:
+                    # use fallback_url if image can't be opened.
+                    log.msg(format="Trying fallback for %(request)s (fallbackurl is %(fallback_url)s) because image could not be opened: %(reason)s",
+                        level=log.DEBUG, spider=spider, request=request, fallback_url=request.meta.get('fallback_url'), reason=e)
+                    return Request(request.meta.get('fallback_url'))
         return response
