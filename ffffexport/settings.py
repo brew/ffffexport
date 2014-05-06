@@ -22,6 +22,11 @@ ITEM_PIPELINES = {'ffffexport.pipelines.FfffoundImagesPipeline': 1}
 IMAGES_STORE = os.path.join(BUILD_DIR, 'images/')
 IMAGES_URLS_FIELD = "original_img_url"
 
+DOWNLOADER_MIDDLEWARES = {
+    'ffffexport.pipelines.FfffoundImagesFallBackMiddleware': 543,
+}
+FALLBACK_HTTP_CODES = [404, 403]
+
 EXTENSIONS = {
     'ffffexport.htmlexporter.HTMLExporter': 500,
 }
