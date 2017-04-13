@@ -16,7 +16,18 @@ ffffexport uses:
 * [Jinja2](https://github.com/mitsuhiko/jinja2)
 
 
+## Installation
+
+In a Python virtualenv:
+
+```
+$ pip install -r requirements.txt
+```
+
+
 ## Usage
+
+In the project directory:
 
 ```
 $ scrapy crawl ffffound -a username=<your_username>
